@@ -45,11 +45,30 @@ productCtrl.getProduct = (req, res) => {
 };
 
 productCtrl.editProduct = (req, res) => {
-    
+    let id = req.params.id
+    let update = req.body
+
+    Product.findByIdAndUpdate(id, update, (err, productUpdated) =>{
+        if (err) return res.status(500).send({message: `Error al realizar la peticion : ${err}`})
+        if (!productUpdated) return res.status(404).send({message: `el producto ${id} no existe`})
+
+        res.status(200).send({product: productUpdated})
+    })
 };
 
 productCtrl.deleteProduct = (req, res) => {
-   
+    let id = req.params.id
+
+    Product.findById(id, (err, product) =>{
+        if (err) return res.status(500).send({message: `Error al realizar la peticion : ${err}`})
+        if (!product) return res.status(404).send({message: `el producto ${id} no existe`})
+
+        product.remove((err)=>{
+            if (err) return res.status(500).send({message: `Error al eliminar el recurso : ${err}`})
+
+            res.status(200).send({message: 'el producto ha sido eliminado'})
+        })
+    })
 };
 
 module.exports = productCtrl;
