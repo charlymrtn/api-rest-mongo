@@ -4,15 +4,17 @@ const express = require('express')
 const bodyParser = require('body-parser')
 
 const app = express()
-const port = process.env.PORT || 3000
+
+const { mongoose } = require('./database');
+
+app.set('port', process.env.PORT || 3000);
 
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
-app.get('/hola/:name',(req, res)=>{
-    res.send({message: `hola ${req.params.name}`})
-})
+app.use('/api/product', require('./routes/product.routes'));
 
-app.listen(port, () => {
-    console.log(`api rest corriendo en localhost:${port}`)
-})
+// starting the server
+app.listen(app.get('port'), () => {
+    console.log(`server on port ${app.get('port')}`);
+});
