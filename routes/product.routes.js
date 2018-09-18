@@ -5,10 +5,16 @@ const router = express.Router();
 
 const product = require('../controllers/product.controller');
 
-router.get('/', product.getProducts);
-router.post('/', product.createProduct);
-router.get('/:id', product.getProduct);
-router.put('/:id', product.editProduct);
-router.delete('/:id', product.deleteProduct); 
+const auth = require('../middlewares/auth')
+
+router.get('/product', product.getProducts);
+router.post('/product', product.createProduct);
+router.get('/product/:id', product.getProduct);
+router.put('/product/:id', product.editProduct);
+router.delete('/product/:id', product.deleteProduct);
+
+router.get('/private',auth.isAuth, (req, res)=>{
+    res.status(200).send({message: 'tienes acceso :)'})
+})
 
 module.exports = router;
