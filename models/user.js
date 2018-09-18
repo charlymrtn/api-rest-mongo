@@ -8,13 +8,13 @@ const crypto = require('crypto')
 const userSchema = new Schema({
     email: { type: String, required: true, unique: true, lowercase: true},
     name: { type: String, required: true},
-    avatar: { type: String, required: true },
-    password: { type: String, required: true, select: false},
+    avatar: { type: String },
+    password: { type: String, select: false},
     signupData: { type: Date, default: Date.now()},
     lastLogin: { type: Date}
 });
 
-userSchema.pre('save', (next)=>{
+userSchema.pre('save', function(next){
     let user = this
     if(!user.isModified('password')) return next()
 
