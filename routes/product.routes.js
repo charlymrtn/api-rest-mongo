@@ -13,7 +13,7 @@ router.get('/product/:id', product.getProduct);
 router.put('/product/:id', product.editProduct);
 router.delete('/product/:id', product.deleteProduct);
 
-router.get('/private',auth.isAuth, (req, res)=>{
+router.get('/private',auth, (req, res) => {
     res.status(200).send({message: 'tienes acceso :)'})
 })
 
