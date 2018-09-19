@@ -2,6 +2,7 @@
 
 const express = require('express')
 const bodyParser = require('body-parser')
+const hbs = require('express-handlebars')
 
 const app = express()
 
@@ -11,6 +12,13 @@ app.set('port', process.env.PORT || 3000);
 
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
+
+app.engine('.hbs',hbs({
+    defaultLayout: 'default',
+    extname: '.hbs'
+}))
+
+app.set('view engine','.hbs')
 
 app.use('/api', require('./routes/product.routes'));
 
