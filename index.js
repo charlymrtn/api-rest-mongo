@@ -22,6 +22,13 @@ app.set('view engine','.hbs')
 
 app.use('/api', require('./routes/product.routes'));
 
+app.get('/login',(req, res)=>{
+    res.render('login')
+})
+app.get('/', (req, res) => {
+    res.render('product')
+  })
+
 // starting the server
 app.listen(app.get('port'), () => {
     console.log(`server on port ${app.get('port')}`);
